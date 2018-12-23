@@ -28,41 +28,41 @@ RUN	apk update && \
 	unzip grocy.zip && \
 	rm -f grocy.zip && \
 	cd grocy-${GROCY_VERSION} && \
-	mv public /www/public && \
-	mv info.php /www/public && \
-	mv controllers /www/controllers && \
-	mv data /www/data && \
-	mv helpers /www/helpers && \
-	mv localization/ /www/localization && \
-	mv middleware/ /www/middleware && \
-	mv migrations/ /www/migrations && \
-	mv publication_assets/ /www/publication_assets && \
-	mv services/ /www/services && \
-	mv views/ /www/views && \
-	mv .yarnrc /www/ && \
-	mv *.php /www/ && \
-	mv *.json /www/ && \
+	mv public /app/public && \
+	mv info.php /app/public && \
+	mv controllers /app/controllers && \
+	mv data /app/data && \
+	mv helpers /app/helpers && \
+	mv localization/ /app/localization && \
+	mv middleware/ /app/middleware && \
+	mv migrations/ /app/migrations && \
+	mv publication_assets/ /app/publication_assets && \
+	mv services/ /app/services && \
+	mv views/ /app/views && \
+	mv .yarnrc /app/ && \
+	mv *.php /app/ && \
+	mv *.json /app/ && \
 	mv composer.* /root/.composer/ && \
-	mv *yarn* /www/ && \
-	mv *.sh /www/ && \
+	mv *yarn* /app/ && \
+	mv *.sh /app/ && \
     # Cleaning up
     rm -rf /tmp/download && \
 	rm -rf /var/cache/apk/*
 
 
 # run php composer.phar with -vvv for extra debug information
-RUN cd /var/www/html && \
-	php composer.phar --working-dir=/www/ -n install && \
-	cp /www/config-dist.php /www/data/config.php && \
-	cd /www && \
+RUN cd /var/app/html && \
+	php composer.phar --working-dir=/app/ -n install && \
+	cp /app/config-dist.php /app/data/config.php && \
+	cd /app && \
 	yarn install && \
-	chown www-data:www-data -R /www/
+	chown app-data:app-data -R /app/
 
 # Set Workdir
-WORKDIR /www/public
+WORKDIR /app/public
 
 # Expose volumes
-VOLUME ["/www"]
+VOLUME ["/app"]
 
 # Expose ports
 EXPOSE 9000
